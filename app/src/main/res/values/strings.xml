@@ -1,6 +1,10 @@
-<resources>
+<resources xml:spase = 'default'>
     <string name="app_name">Homework43</string>
     <string name="ok">ОК</string>
     <string name="selectStart">Выбрать начало</string>
     <string name="selectEnd">Выбрать окончание</string>
+    <string name="date_start_placeholder">Дата-время старта задачи: %s</string>
+    <string name="date_end_placeholder">Дата-время конца задачи: %s</string>
+    <string name="output">старт: %1$s окончание: %2$s</string>
+    <string name="error">Ошибка</string>
 </resources>

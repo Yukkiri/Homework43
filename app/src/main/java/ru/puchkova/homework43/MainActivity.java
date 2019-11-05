@@ -13,8 +13,11 @@ import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button ok, selectStart, selectEnd;
-    private CalendarView start, end;
+    private Button ok;
+    private Button selectStart;
+    private Button selectEnd;
+    private CalendarView start;
+    private CalendarView end;
 
     private long startDate;
     private String startDateTxt;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             start.setVisibility(View.VISIBLE);
             end.setVisibility(View.GONE);
-            start.setOnDateChangeListener(odclStart);
+            start.setOnDateChangeListener(onDateChangeListenerStart);
         }
     };
 
@@ -61,15 +64,15 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             end.setVisibility(View.VISIBLE);
             start.setVisibility(View.GONE);
-            end.setOnDateChangeListener(odclEnd);
+            end.setOnDateChangeListener(onDateChangeListenerStart);
         }
     };
 
-    CalendarView.OnDateChangeListener odclStart = new CalendarView.OnDateChangeListener() {
+    CalendarView.OnDateChangeListener onDateChangeListenerStart = new CalendarView.OnDateChangeListener() {
         @Override
         public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-            startDateTxt = year+"-"+month+"-"+dayOfMonth;
-            selectStart.setText("Дата-время старта задачи: " + startDateTxt);
+            startDateTxt = year + "-" + month + "-" + dayOfMonth;
+            selectStart.setText(getString(R.string.date_start_placeholder, startDateTxt));
             GregorianCalendar gregorianCalendar = new GregorianCalendar();
             gregorianCalendar.set(year, month, dayOfMonth);
             startDate = gregorianCalendar.getTimeInMillis();
@@ -77,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    CalendarView.OnDateChangeListener odclEnd = new CalendarView.OnDateChangeListener() {
+    CalendarView.OnDateChangeListener onDateChangeListenerEnd = new CalendarView.OnDateChangeListener() {
         @Override
         public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-            endDateTxt = year+"-"+month+"-"+dayOfMonth;
-            selectEnd.setText("Дата-время окончания задачи: " + endDateTxt);
+            endDateTxt = year + "-" + month + "-" + dayOfMonth;
+            selectEnd.setText(getString(R.string.date_end_placeholder, endDateTxt));
             GregorianCalendar gregorianCalendar = new GregorianCalendar();
             gregorianCalendar.set(year, month, dayOfMonth);
             endDate = gregorianCalendar.getTimeInMillis();
@@ -92,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener oclOk = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (startDate > endDate){
-                Toast.makeText(MainActivity.this, "Ошибка", Toast.LENGTH_LONG).show();
-                selectStart.setText("Дата-время старта задачи:");
-                selectEnd.setText("Дата-время окончания задачи:");
+            if (startDate > endDate) {
+                Toast.makeText(MainActivity.this, getString(R.string.error), Toast.LENGTH_LONG).show();
+                selectStart.setText(getString(R.string.date_start_placeholder));
+                selectEnd.setText(getString(R.string.date_end_placeholder));
             } else {
-                Toast.makeText(MainActivity.this, "старт: " + startDateTxt + " окончаниe: " + endDateTxt, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getString(R.string.output, startDateTxt, endDateTxt), Toast.LENGTH_LONG).show();
             }
         }
     };
